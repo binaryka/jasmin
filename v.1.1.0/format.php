@@ -157,8 +157,8 @@ $_format['global']['extra'] = array(
     'col1' => array('width' => '150px'),
     'actions' => array(
         'actions' => array(
-            array('name' => 'Удалить', 'action' => 'del'),
-            array('name' => 'Отправить', 'action' => 'send')
+            array('name' => 'Delete', 'action' => 'del'),
+            array('name' => 'Send', 'action' => 'send')
         )
     ),
 );
