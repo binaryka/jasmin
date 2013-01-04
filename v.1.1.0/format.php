@@ -5,7 +5,7 @@ $_format['global'] = array(
 );
 
 
-// Вывод записей
+
 $_format['list'] = array(
     'from' => 'list',
     'access' => array(
@@ -65,7 +65,7 @@ $_format['list'] = array(
 );
 
 
-// работа с одной записью
+
 $_format['item_list'] = array(
     'from' => 'list',
     'access' => array(
@@ -139,17 +139,8 @@ $_format['list_for_send'] = array(
 );
 
 
-// Текстовые переводы полей
-$_format['global']['names'] = array(
-    "id" => "Record",
-    "name" => "Name",
-    "sex" => "Sex",
-    "company" => "Company",
-    "email" => "Email",
-    "unical_id" => "Unical id"
-);
 
-// Текстовые переводы полей
+
 $_format['global']['names'] = array(
     "id" => "Record",
     "name" => "Name",
@@ -160,7 +151,7 @@ $_format['global']['names'] = array(
     "unical_id" => "Link"
 );
 
-// Заготовленные шаблоны стилей
+
 $_format['global']['extra'] = array(
     'tableone' => array('table' => 'tableone'),
     'col1' => array('width' => '150px'),
