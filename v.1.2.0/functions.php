@@ -44,8 +44,34 @@ class Jas_storage{
 		trigger_error('Unserializing instances of this class is forbidden.', E_USER_ERROR);
 	}
 
-	public function push( $array, $path = false ){
-		$this->storage = array_merge_recursive($this->storage, $array);
+	public function push( $in, $path = false ){
+
+		if($path){
+			$path = explode('->',$path);
+			if( isset($path) ){
+				$path_array = array();
+
+				for($i = count($path)-1; $i >=0; $i--){
+					$tmpArr = array();
+
+					if( $i ==  count($path)-1)
+						//if(is_string($in))
+							$path_array = $in;
+						//elseif(is_array($in))
+						//	$path_array = $in;
+					
+					$tmpArr[$path[$i]] = $path_array;
+					
+					
+					$path_array = $tmpArr;
+				}
+				
+				$in = $path_array;
+			}
+		}
+
+
+		$this->storage = array_merge_recursive($this->storage, (array)$in);
 	}
 
 	public function get(){
@@ -122,7 +148,7 @@ function jas_db_query( $sql, $execute = array(':' => ''), $typequery = 'select' 
 
 			// Собираем все sql запросы в хранилище для отладки
 
-			$storage->push(array('debug' => array('allsql' => $outsql) ) );
+			$storage->push(array($outsql),'debug->allsql');
 	
 		}else{
 			$error = 'badparam';
@@ -131,7 +157,7 @@ function jas_db_query( $sql, $execute = array(':' => ''), $typequery = 'select' 
 		
 	}
 
-	$storage->push(array('sqlcache' => array($sqlmd5 => $result) ) );
+	$storage->push($result, 'sqlcache->'.$sqlmd5 );
 
 	$out = array('code' => $code);
 
@@ -988,7 +1014,7 @@ function jas_create_options($arg,$ret){
 	$md5_options = md5(json_encode($options));
 
 	if( !isset($row_options[$arg['field']."-".$md5_options]) ){
-		$storage->push(array('out' => array('options' => array($arg['field']."-".$md5_options => $options) ) ) );
+		$storage->push($options,'out->options->'.$arg['field']."-".$md5_options);
 	}
 
 	$ret['options'] = $arg['field']."-".$md5_options;
@@ -1009,12 +1035,12 @@ function jas_set_access_param( $access_param, $params, $prefix = 'r->' ){
 }
 
 
-function jas_set_value_by_key($set_param,$key,$defaultval ){
+function jas_set_value_by_key( $set_param, $key, $defaultval ){
 	$set = $defaultval;
 
-	if( isset($set_param))
-		foreach ( $set_param as $keyset => $value)
-			if( in_array($key, $value))
+	if( isset($set_param) )
+		foreach ( $set_param as $keyset => $value )
+			if( in_array($key, $value) )
 				$set = $keyset;
 
 	return $set;
@@ -1028,7 +1054,7 @@ function jas_set_mem( $place, $line = false ){
 		$line = '- string ' . $line;
 
 	$current_mem = memory_get_usage();
-	$storage->push(array('debug' => array('mem_usage' => array( $place => (($current_mem/1024)/1024) . " mb " . $line) ) ) );
+	$storage->push( (($current_mem/1024)/1024) . " mb " . $line,'debug->mem_usage->'.$place );
 }
 
 

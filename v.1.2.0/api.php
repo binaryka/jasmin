@@ -11,6 +11,8 @@
 	));
 
 
+	print_r($storage->get());
+
 	if( $_GET['r'] )
 		print_r($result);
 	else

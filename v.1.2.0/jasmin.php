@@ -184,7 +184,7 @@ function Jasmin($arg){
 		$result_action = $result_action+$storage->get()['out'];
 
 	if( $arg['settings']['debug'] )
-		$storage->push(array('debug' => array('mem_usage' => array('peack_usemem' => ((memory_get_peak_usage()/1024)/1024). " mb" ))));
+		$storage->push(((memory_get_peak_usage()/1024)/1024). " mb" , 'debug->mem_usage->peack_usemem');
 
 	if( $storage->get()['debug'] and $arg['settings']['debug'])
 		$result_action['debug'] = $storage->get()['debug'];
